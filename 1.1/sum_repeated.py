@@ -1,12 +1,13 @@
 """Find and sum repeated elements from a sequence of integers."""
-from typing import Iterator
+from typing import List, Iterator
 from itertools import islice, chain
 
-def rotate(iterable, n=1):
+
+def rotate(iterable: List, n: int = 1) -> Iterator:
     """Rotate an iterable n steps to the right."""
     length = len(iterable)
     if length == 0:
-        return iterable
+        return iter(iterable)
 
     rotation = length - (n % length)
 
@@ -15,12 +16,14 @@ def rotate(iterable, n=1):
         islice(iterable, rotation)
     )
 
-def sum_halfway_repeated(sequence: str):
+
+def sum_halfway_repeated(sequence: str) -> int:
     """Sum of integers with an identical element halfway around the string."""
     assert len(sequence) % 2 == 0
 
     offset = int(len(sequence) / 2)
     return sum_repeated(sequence, offset)
+
 
 def sum_repeated(sequence: str, offset=1) -> int:
     """Sum of integers with an identical element <offset> to the right."""

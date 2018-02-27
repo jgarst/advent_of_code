@@ -33,21 +33,26 @@ def test_4():
     """Test example input for first problem."""
     assert sum_repeated('91212129') == 9
 
+
 def test_5():
     """Test example input for the second problem."""
     assert sum_halfway_repeated('1212') == 6
+
 
 def test_6():
     """Test example input for the second problem."""
     assert sum_halfway_repeated('1221') == 0
 
+
 def test_7():
     """Test example input for the second problem."""
     assert sum_halfway_repeated('123425') == 4
 
+
 def test_8():
     """Test example input for the second problem."""
     assert sum_halfway_repeated('123123') == 12
+
 
 def test_9():
     """Test example input for the second problem."""
