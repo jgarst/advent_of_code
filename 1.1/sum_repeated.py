@@ -1,27 +1,30 @@
 """Find and sum repeated elements from a sequence of integers."""
 from typing import Iterator
-from collections import deque
+from itertools import islice, chain
 
+def rotate(iterable, n=1):
+    """Rotate an iterable n steps to the right."""
+    length = len(iterable)
+    if length == 0:
+        return iterable
 
-def sum_repeated(sequence: str) -> int:
-    """Return the sum of integers with an identical element to their right."""
-    queue = deque(int(c) for c in sequence)
-    return sum(repeated_digits(queue))
+    rotation = length - (n % length)
 
+    return chain(
+        islice(iterable, rotation, length),
+        islice(iterable, rotation)
+    )
 
-def repeated_digits(sequence: deque) -> Iterator[int]:
-    """Walk a sequence of integers and return repeated elements."""
-    if len(sequence) == 0:
-        return
+def sum_halfway_repeated(sequence: str):
+    """Sum of integers with an identical element halfway around the string."""
+    assert len(sequence) % 2 == 0
 
-    first_digit = prev_digit = sequence.popleft()
+    offset = int(len(sequence) / 2)
+    return sum_repeated(sequence, offset)
 
-    for digit in sequence:
-        if digit == prev_digit:
-            yield digit
+def sum_repeated(sequence: str, offset=1) -> int:
+    """Sum of integers with an identical element <offset> to the right."""
+    integers = [int(c) for c in sequence]
+    pairs = zip(integers, rotate(integers, offset))
 
-        prev_digit = digit
-
-    # list is circular
-    if first_digit == prev_digit:
-        yield prev_digit
+    return sum(i for i, j in pairs if i == j)
