@@ -1,6 +1,6 @@
 """Tests for the first day of advent of code."""
 import pytest
-from sum_repeated import sum_repeated, sum_halfway_repeated
+from .sum_repeated import sum_repeated, sum_halfway_repeated
 
 
 def test_nondigit():
