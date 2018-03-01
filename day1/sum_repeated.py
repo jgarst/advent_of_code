@@ -3,13 +3,13 @@ from typing import List, Iterator
 from itertools import islice, chain
 
 
-def rotate(iterable: List, n: int = 1) -> Iterator:
+def rotate(iterable: List, rotation: int = 1) -> Iterator:
     """Rotate an iterable n steps to the right."""
     length = len(iterable)
     if length == 0:
         return iter(iterable)
 
-    rotation = length - (n % length)
+    rotation = length - (rotation % length)
 
     return chain(
         islice(iterable, rotation, length),
