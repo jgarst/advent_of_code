@@ -69,9 +69,16 @@ import pathlib
 import itertools
 from collections.abc import Iterable
 from typing import NamedTuple
+import re
 
 INPUT_PATH = pathlib.Path("input.txt")
+PASSPORT_DELIMITER = re.compile("^\n$")
 REQUIRED_FIELDS = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
+
+
+def passport_delimiter(line: str) -> bool:
+    """Returns true is this line separates distinct passport inputs."""
+    return PASSPORT_DELIMITER.match(line) is None
 
 
 class Passport(NamedTuple):
@@ -88,7 +95,7 @@ def count_valid_passports(passport_input: Iterable[str]) -> int:
     passports = (
         parse_passport(text)
         for is_passport, text in itertools.groupby(
-            passport_input, lambda line: line != "\n"
+            passport_input, passport_delimiter
         )
         if is_passport
     )
@@ -106,7 +113,7 @@ def parse_passport(lines: Iterable[str]) -> Passport:
     return Passport(is_valid=REQUIRED_FIELDS.issubset(fields))
 
 
-def main():
+def main() -> None:
 
     with open(INPUT_PATH) as passport_input:
         input_count = count_valid_passports(passport_input)
