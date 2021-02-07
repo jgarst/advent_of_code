@@ -64,3 +64,12 @@ repos:
     hooks:
     -   id: pyupgrade
         args: [--py39-plus]
+
+-   repo: local
+    hooks:
+    -   id: pytest-check
+        name: pytest-check
+        language: system
+        entry: pytest
+        pass_filenames: false
+        always_run: true
